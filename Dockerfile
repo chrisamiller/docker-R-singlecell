@@ -212,9 +212,22 @@ RUN apt-get update && apt-get install -y --no-install-recommends locales && \
     ln -s /usr/local/lib/R/site-library/littler/examples/installGithub.r /usr/local/bin/installGithub.r && \
     ln -s /usr/local/lib/R/site-library/littler/bin/r /usr/local/bin/r
 
-   ## install r packages, bioconductor, etc ##
-   ADD rpackages.R /tmp/
-   RUN R -f /tmp/rpackages.R
+   ## install core bioconductor
+   ADD r-bioconductor.R /tmp/
+   RUN R -f /tmp/r-bioconductor.R
+
+   ## install misc useful packages
+   ADD r-misc.R /tmp/
+   RUN R -f /tmp/r-misc.R
+
+   ## install seurat
+   ADD r-seurat.R /tmp/
+   RUN R -f /tmp/r-seurat.R
+
+   ## install dropletutils
+   ADD r-dropletutils.R /tmp/
+   RUN R -f /tmp/r-dropletutils.R
+
 
    ## Clean up
    RUN cd / && \
@@ -225,6 +238,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends locales && \
    apt-get clean
 
 COPY tsv2xlsx.py /usr/bin/tsv2xlsx.py
+
 
 # needed for MGI data mounts
 RUN apt-get update && apt-get install -y libnss-sss && apt-get clean all
