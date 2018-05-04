@@ -1,4 +1,4 @@
-FROM chrisamiller:docker-r
+FROM chrisamiller/docker-r:3.5.0
 MAINTAINER Chris Miller <c.a.miller@wustl.edu>
 
 LABEL Image for single-cell RNAseq analyses
